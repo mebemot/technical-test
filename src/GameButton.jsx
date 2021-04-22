@@ -1,8 +1,8 @@
 import React from "react";
 
-export function GameButton({ onClick, description }) {
+export function GameButton({ onClick, onBlur, description }) {
   return (
-    <button onClick={onClick} aria-label={description}>
+    <button onClick={onClick} onBlur={onBlur} aria-label={description}>
       {description}
     </button>
   );

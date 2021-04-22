@@ -32,6 +32,7 @@ export default function Game() {
       <Players players={players} onClick={handleDeal} onBlur={handleWarning} />
       <GameButtons
         handleShuffle={handleShuffle}
+        onBlur={handleWarning}
         handleReset={handleReset}
         shuffle={"Shuffle"}
         reset={"Reset"}
