@@ -1,0 +1,13 @@
+.playerCounter {
+  text-align: center;
+  display: block;
+  margin: auto;
+}
+
+.playerCounter button {
+  margin: 20px;
+}
+
+.playerCounter p {
+  display: inline;
+}
