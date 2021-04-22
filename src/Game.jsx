@@ -117,6 +117,10 @@ export default function Game() {
    * @returns {void}
    */
   function handleShuffle() {
+    if (deck.length !== 52) {
+      handleWarning("Can only shuffle when deck is full!");
+      return;
+    }
     let tempDeck = deck.slice();
     let i = 0;
     tempDeck.map(() => {
