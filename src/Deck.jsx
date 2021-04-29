@@ -8,8 +8,8 @@ export function Deck({ deck, player }) {
       key={card.id}
       label={`${player} ${card.id}`}
       value={card.v}
-      suitCode={card.suitCode}
-      suit={card.suitName}
+      suitCode={card.s.suitCode}
+      suit={card.s.suitName}
     />
   ));
   return <div className={styling.deck}>{deckOfCards}</div>;

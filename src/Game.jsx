@@ -8,10 +8,10 @@ import { Warning } from "./Warning";
 
 export default function Game() {
   const suits = [
-    ["spades", "\u2660"],
-    ["diamonds", "\u2666"],
-    ["clubs", "\u2663"],
-    ["hearts", "\u2665"],
+    { suitName: "spades", suitCode: "\u2660" },
+    { suitName: "diamonds", suitCode: "\u2666" },
+    { suitName: "clubs", suitCode: "\u2663" },
+    { suitName: "hearts", suitCode: "\u2665" },
   ];
   const values = [2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K", "A"];
   const [deck, setDeck] = useState(initDeck());
@@ -21,7 +21,7 @@ export default function Game() {
   const [warning, setWarning] = useState(initWarning);
 
   return (
-    <div>
+    <div className={styling.game}>
       <div className={styling.playerInfo}>
         <PlayerCounter
           onAdd={() => handleAddPlayer()}
@@ -56,11 +56,9 @@ export default function Game() {
   function initDeck() {
     const deck = [];
     suits.forEach((s) => {
-      let suitName = s[0];
-      let suitCode = s[1];
       values.forEach((v) => {
-        let id = `${v} of ${suitName}`;
-        deck.push({ suitName, suitCode, v, id });
+        let id = `${v} of ${s.suitName}`;
+        deck.push({ s, v, id });
       });
     });
     return deck;
