@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./index.css";
+import styling from "./Game.module.css";
 import { Deck } from "./Deck";
 import { GameButtons } from "./GameButtons";
 import { PlayerCounter } from "./PlayerCounter";
@@ -22,22 +22,30 @@ export default function Game() {
 
   return (
     <div>
-      <PlayerCounter
-        onAdd={() => handleAddPlayer()}
-        onRemove={() => handleRemovePlayer()}
-        onBlur={() => handleWarning()}
-        playerCount={players.length}
-      />
-      <Warning message={warning} />
-      <Players players={players} onClick={handleDeal} onBlur={handleWarning} />
-      <GameButtons
-        handleShuffle={handleShuffle}
-        onBlur={handleWarning}
-        handleReset={handleReset}
-        shuffle={"Shuffle"}
-        reset={"Reset"}
-      />
-      <Deck deck={deck} player={"deck"} />
+      <div className={styling.playerInfo}>
+        <PlayerCounter
+          onAdd={() => handleAddPlayer()}
+          onRemove={() => handleRemovePlayer()}
+          onBlur={() => handleWarning()}
+          playerCount={players.length}
+        />
+        <Warning message={warning} />
+        <Players
+          players={players}
+          onClick={handleDeal}
+          onBlur={handleWarning}
+        />
+      </div>
+      <div className={styling.gameInfo}>
+        <GameButtons
+          handleShuffle={handleShuffle}
+          onBlur={handleWarning}
+          handleReset={handleReset}
+          shuffle={"Shuffle"}
+          reset={"Reset"}
+        />
+        <Deck deck={deck} player={"deck"} />
+      </div>
     </div>
   );
 
@@ -64,17 +72,17 @@ export default function Game() {
    * @returns {void}
    */
   function handleDeal(i) {
-    if (deck.length === 0) {
-      handleWarning("No cards left in deck!");
+    if (handleWarning(deck.length === 0, "No cards left in deck!")) {
+      return;
+    } else {
+      let tempDeck = deck.slice();
+      let card = tempDeck.pop();
+      setDeck(tempDeck);
+      let playersTemp = players.slice();
+      playersTemp[i].push(card);
+      setPlayers(playersTemp);
       return;
     }
-    let tempDeck = deck.slice();
-    let card = tempDeck.pop();
-    setDeck(tempDeck);
-    let playersTemp = players.slice();
-    playersTemp[i].push(card);
-    setPlayers(playersTemp);
-    return;
   }
 
   /**
@@ -94,23 +102,33 @@ export default function Game() {
    * @returns {void}
    */
   function handleRemovePlayer() {
-    if (deck.length < 52) {
-      handleWarning("Cannot remove player while game in session!");
+    if (
+      handleWarning(
+        deck.length < 52,
+        "Cannot remove player while game in session!"
+      )
+    ) {
+      return;
+    } else {
+      let playersTemp = players.slice(0, players.length - 1);
+      setPlayers(playersTemp);
       return;
     }
-    let playersTemp = players.slice(0, players.length - 1);
-    setPlayers(playersTemp);
-    return;
   }
 
   /**
-   * Updates Warning to message sent.
+   * Checks if warning should be updated and changes it if it should.
    * @param {string} message
-   * @returns {void}
+   * @returns {boolean}
    */
-  function handleWarning(message) {
-    setWarning(message);
-    return;
+  function handleWarning(test, message) {
+    if (test) {
+      setWarning(message);
+      return true;
+    } else {
+      setWarning("");
+      return false;
+    }
   }
 
   /**
@@ -118,22 +136,24 @@ export default function Game() {
    * @returns {void}
    */
   function handleShuffle() {
-    if (deck.length !== 52) {
-      handleWarning("Can only shuffle when deck is full!");
+    if (
+      handleWarning(deck.length !== 52, "Can only shuffle when deck is full!")
+    ) {
+      return;
+    } else {
+      let tempDeck = deck.slice();
+      let i = 0;
+      tempDeck.map(() => {
+        let randomIndex = Math.floor(Math.random() * deck.length);
+        let cardStore = tempDeck[i];
+        tempDeck[i] = tempDeck[randomIndex];
+        tempDeck[randomIndex] = cardStore;
+        ++i;
+        return "done";
+      });
+      setDeck(tempDeck);
       return;
     }
-    let tempDeck = deck.slice();
-    let i = 0;
-    tempDeck.map(() => {
-      let randomIndex = Math.floor(Math.random() * deck.length);
-      let cardStore = tempDeck[i];
-      tempDeck[i] = tempDeck[randomIndex];
-      tempDeck[randomIndex] = cardStore;
-      ++i;
-      return "done";
-    });
-    setDeck(tempDeck);
-    return;
   }
 
   /**
