@@ -1,6 +1,11 @@
 import React from "react";
+import styled from "styled-components";
 import { Card } from "./Card";
-import styling from "./Deck.module.css";
+
+const Container = styled.div`
+  margin: auto;
+  text-align: center;
+`;
 
 export function Deck({ deck, player }) {
   const deckOfCards = deck.map((card) => (
@@ -12,5 +17,5 @@ export function Deck({ deck, player }) {
       suit={card.s.suitName}
     />
   ));
-  return <div className={styling.deck}>{deckOfCards}</div>;
+  return <Container>{deckOfCards}</Container>;
 }

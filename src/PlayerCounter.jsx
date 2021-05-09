@@ -1,14 +1,27 @@
 import React from "react";
-import styling from "./PlayerCounter.module.css";
+import styled from "styled-components";
+
+const Container = styled.div`
+  margin: auto;
+  text-align: center;
+`;
+
+const StyledButton = styled.button`
+  margin: 20px;
+`;
+
+const Count = styled.p`
+  display: inline;
+`;
 
 export function PlayerCounter({ onAdd, onRemove, playerCount, onBlur }) {
   return (
-    <div className={styling.playerCounter}>
-      <button onClick={onRemove} onBlur={onBlur}>
+    <Container>
+      <StyledButton onClick={onRemove} onBlur={onBlur}>
         -
-      </button>
-      <p>{playerCount}</p>
-      <button onClick={onAdd}>+</button>
-    </div>
+      </StyledButton>
+      <Count>{playerCount}</Count>
+      <StyledButton onClick={onAdd}>+</StyledButton>
+    </Container>
   );
 }

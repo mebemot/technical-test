@@ -1,6 +1,11 @@
 import React from "react";
+import styled from "styled-components";
 import { GameButton } from "./GameButton";
-import styling from "./GameButtons.module.css";
+
+const Container = styled.div`
+  margin: auto;
+  text-align: center;
+`;
 
 export function GameButtons({
   handleShuffle,
@@ -10,13 +15,13 @@ export function GameButtons({
   reset,
 }) {
   return (
-    <div className={styling.gameButtons}>
+    <Container>
       <GameButton
         onClick={() => handleShuffle()}
         onBlur={() => onBlur()}
         description={shuffle}
       />
       <GameButton onClick={() => handleReset()} description={reset} />
-    </div>
+    </Container>
   );
 }
