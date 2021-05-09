@@ -1,10 +1,23 @@
 import React, { useState } from "react";
-import styling from "./Game.module.css";
+import styled from "styled-components";
 import { Deck } from "./Deck";
 import { GameButtons } from "./GameButtons";
 import { PlayerCounter } from "./PlayerCounter";
 import { Players } from "./Players";
 import { Warning } from "./Warning";
+
+const StyledGame = styled.div`
+  @media (min-width: 750px) {
+    display: flex;
+    justify-content: space-around;
+  }
+`;
+
+const Info = styled.div`
+  @media (min-width: 750px) {
+    width: 45%;
+  }
+`;
 
 export default function Game() {
   const suits = [
@@ -21,8 +34,8 @@ export default function Game() {
   const [warning, setWarning] = useState(initWarning);
 
   return (
-    <div className={styling.game}>
-      <div className={styling.playerInfo}>
+    <StyledGame>
+      <Info>
         <PlayerCounter
           onAdd={() => handleAddPlayer()}
           onRemove={() => handleRemovePlayer()}
@@ -35,8 +48,8 @@ export default function Game() {
           onClick={handleDeal}
           onBlur={handleWarning}
         />
-      </div>
-      <div className={styling.gameInfo}>
+      </Info>
+      <Info>
         <GameButtons
           handleShuffle={handleShuffle}
           onBlur={handleWarning}
@@ -45,8 +58,8 @@ export default function Game() {
           reset={"Reset"}
         />
         <Deck deck={deck} player={"deck"} />
-      </div>
-    </div>
+      </Info>
+    </StyledGame>
   );
 
   /**
@@ -115,7 +128,8 @@ export default function Game() {
   }
 
   /**
-   * Checks if warning should be updated and changes it if it should.
+   * Checks if warning should be updated and changes it accordingly.
+   * @param test operation that should be true to display warning
    * @param {string} message
    * @returns {boolean}
    */

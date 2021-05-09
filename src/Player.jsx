@@ -1,19 +1,28 @@
 import React from "react";
+import styled from "styled-components";
 import { Deck } from "./Deck";
-import styling from "./Player.module.css";
+
+const Container = styled.div`
+  margin: auto;
+  text-align: center;
+`;
+
+const StyledButton = styled.button`
+  margin: 20px;
+`;
 
 export function Player({ playerName, cards, onClick, onBlur }) {
   const playerDeck = <Deck deck={cards} player={playerName} />;
   return (
-    <div className={styling.player}>
-      <button
+    <Container>
+      <StyledButton
         onClick={onClick}
         onBlur={onBlur}
         aria-label={"click to deal to " + playerName}
       >
         {playerName}
-      </button>
+      </StyledButton>
       <div>{playerDeck}</div>
-    </div>
+    </Container>
   );
 }

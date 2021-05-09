@@ -1,10 +1,16 @@
 import React from "react";
-import styling from "./Warning.module.css";
+import styled from "styled-components";
+
+const WarningText = styled.p`
+  text-align: center;
+  color: red;
+  height: 20px;
+`;
 
 export function Warning({ message }) {
   return (
     <div>
-      <p className={styling.warning}>{message}</p>
+      <WarningText>{message}</WarningText>
     </div>
   );
 }
